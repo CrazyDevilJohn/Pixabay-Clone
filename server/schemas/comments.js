@@ -1,19 +1,20 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'category',
-  title: 'Category',
+  name: 'comments',
+  title: 'Comments',
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'comment',
+      title: 'comment',
       type: 'string',
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
+      name: 'users',
+      title: 'Users',
+      type: 'reference',
+      to: {type: 'users'},
     }),
   ],
 })

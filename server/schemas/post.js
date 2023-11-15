@@ -11,19 +11,27 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      name: 'keywords',
+      title: 'Tags',
+      type: 'array',
+      of: [{type: 'string'}],
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: {type: 'author'},
+      name: 'description',
+      title: 'Description',
+      type: 'string',
+    }),
+    defineField({
+      name: 'filesource',
+      title: 'Filetype',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Image', value: 'image'},
+          {title: 'Others', value: 'others'},
+        ],
+        layout: 'radio',
+      },
     }),
     defineField({
       name: 'mainImage',
@@ -32,34 +40,37 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      hidden: ({parent}) => parent?.filesource !== 'image',
+    }),
+
+    defineField({
+      name: 'otherMedia',
+      title: 'Other Media',
+      type: 'file',
+      hidden: ({parent}) => parent?.filesource === 'image',
     }),
     defineField({
       name: 'categories',
       title: 'Categories',
+      type: 'string',
+    }),
+    defineField({
+      name: 'users',
+      title: 'Users',
+      type: 'reference',
+      to: {type: 'users'},
+    }),
+    defineField({
+      name: 'comments',
+      title: 'Comments',
       type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [{type: 'reference', to: [{type: 'comments'}]}],
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: 'collections',
+      title: 'Collections',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'users'}]}],
     }),
   ],
-
-  preview: {
-    select: {
-      title: 'title',
-      author: 'author.name',
-      media: 'mainImage',
-    },
-    prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
-    },
-  },
 })
