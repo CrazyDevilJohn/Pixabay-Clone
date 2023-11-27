@@ -25,7 +25,7 @@ const Banner = () => {
           by our talented community.
         </p>
 
-        <div className="w-1/2 gap-4 px-4 py-3 rounded-full bg-white flex items-center justify-between">
+        <div className="w-1/2 gap-4 px-4 py-3 rounded-full bg-white flex items-center justify-between overflow-hidden">
           <FaSearch size={16} color="#656F79" />
           <input
             type="text"
@@ -33,7 +33,7 @@ const Banner = () => {
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="search here"
-            className="flex-1 border-none outline-none  text-textColor text-lg font-semibold"
+            className="flex-1 border-none outline-none bg-transparent text-textColor text-lg font-semibold w-[80%]"
           />
         </div>
       </div>

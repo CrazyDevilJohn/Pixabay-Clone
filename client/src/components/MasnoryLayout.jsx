@@ -8,8 +8,8 @@ const breakPoint = {
   2000: 5,
   1200: 3,
   1000: 3,
-  700: 2,
-  400: 1,
+  800: 2,
+  600: 1,
 };
 
 const suggestedBreakPoint = {
@@ -18,8 +18,6 @@ const suggestedBreakPoint = {
   2000: 4,
   1200: 4,
   1000: 3,
-  700: 2,
-  400: 2,
 };
 
 const MasnoryLayout = ({ feeds, isSuggestions }) => {
