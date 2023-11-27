@@ -19,6 +19,7 @@ const CreatePost = () => {
   const [alert, setAlert] = useState(null);
   const [keywords, setKeywords] = useState("");
   const [description, setDescription] = useState("");
+  const [tempKeywords, setTempKeywords] = useState("");
   const [tags, setTags] = useState([]);
   const user = useSelector((state) => state.user);
 
@@ -76,6 +77,7 @@ const CreatePost = () => {
   };
 
   const saveData = async () => {
+    setTempKeywords("");
     if (!title || !asset || !category || !tags) {
       setAlert("Required Fields are missing");
       setInterval(() => {
@@ -115,6 +117,7 @@ const CreatePost = () => {
           setInterval(() => {
             setAlert(null);
           }, 3000);
+          window.location.reload();
         });
       } else {
         const doc = {
@@ -159,7 +162,13 @@ const CreatePost = () => {
     <div className="w-full h-auto flex items-center justify-start flex-col gap-4">
       {/* alert  */}
       {alert && (
-        <div className="w-full px-4 py-3 rounded-md bg-red-100 shadow-inner  flex items-center justify-center">
+        <div
+          className={`w-full px-4 py-3 rounded-md  shadow-inner ${
+            alert === "Required Fields are missing"
+              ? "bg-red-100"
+              : "bg-green-100"
+          } flex items-center justify-center`}
+        >
           <p className="text-xl text-primary font-medium">{alert}</p>
         </div>
       )}
@@ -268,8 +277,12 @@ const CreatePost = () => {
             type="text"
             placeholder="Type your Tags here separated by comma"
             className="w-full px-4 py-3 rounded-md border border-gray-200 shadow-inner text-lg text-primary font-semibold"
-            onChange={(e) => setKeywords(e.target.value)}
+            onChange={(e) => {
+              setKeywords(e.target.value);
+              setTempKeywords(e.target.value);
+            }}
             onKeyUp={handleKeyUp}
+            value={tempKeywords}
           />
           <AiOutlineClear
             className="absolute right-3 text-xl text-primary cursor-pointer hover:text-2xl transition-all duration-150"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { HomeContainers, NewPost } from "./containers";
-import { Header, MainLoader } from "./components";
+import { HomeContainers, NewPost, SearchContainer } from "./containers";
+import { FeedDetail, Header, MainLoader } from "./components";
 import { useEffect } from "react";
 import { firebaseAuth } from "./config/firebase.config";
 import { createNewUser } from "./sanity";
@@ -14,20 +14,24 @@ const App = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    firebaseAuth.onAuthStateChanged((redult) => {
-      if (redult) {
-        createNewUser(redult?.providerData[0]).then(() => {
-          console.log("user created");
-          dispatch(SET_USER(redult?.providerData[0]));
+    firebaseAuth.onAuthStateChanged((result) => {
+      console.log("uid ", result?.uid);
+      if (result?.uid !== undefined) {
+        createNewUser(result?.providerData[0]).then(() => {
+          dispatch(SET_USER(result?.providerData[0]));
           setTimeout(() => {
             setIsLoading(false);
           }, 2000);
         });
+      } else {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       }
     });
   }, []);
   return (
-    <div className="w-screen min-h-screen flex flex-col items-center justify-start">
+    <div className="overflow-hidden min-h-screen flex flex-col items-center justify-start">
       {isLoading ? (
         <MainLoader />
       ) : (
@@ -39,6 +43,8 @@ const App = () => {
             <Routes>
               <Route path="/*" element={<HomeContainers />} />
               <Route path="/newPost/*" element={<NewPost />} />
+              <Route path="/feed-detail/:_id" element={<FeedDetail />} />
+              <Route path="/search/:searchTerm" element={<SearchContainer />} />
             </Routes>
           </main>
           {/* main content */}

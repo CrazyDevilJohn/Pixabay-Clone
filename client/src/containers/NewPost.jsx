@@ -2,9 +2,11 @@ import React from "react";
 import { NewPostBg } from "../assets";
 import { subMenu } from "../utils/supports";
 import { NavLink, Route, Routes } from "react-router-dom";
-import { Collections, CreatePost, MyMedia } from "../components";
+import { Collections, CreatePost, Filter, MyMedia } from "../components";
+import { useSelector } from "react-redux";
 
 const NewPost = () => {
+  const feeds = useSelector((state) => state.feeds);
   return (
     <div className="w-screen h-auto flex flex-col items-center justify-center relative">
       <div className="w-full h-340 relative">
@@ -38,7 +40,7 @@ const NewPost = () => {
           <Routes>
             <Route path="/upload" element={<CreatePost />} />
             <Route path="/collections" element={<Collections />} />
-            <Route path="/my-media" element={<MyMedia />} />
+            <Route path="/my-media" element={<MyMedia feeds={feeds} />} />
           </Routes>
         </div>
       </section>
