@@ -15,7 +15,6 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
     firebaseAuth.onAuthStateChanged((result) => {
-      console.log("uid ", result?.uid);
       if (result?.uid !== undefined) {
         createNewUser(result?.providerData[0]).then(() => {
           dispatch(SET_USER(result?.providerData[0]));
