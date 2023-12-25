@@ -14,9 +14,7 @@ const HomeContainers = () => {
     if (!feeds) {
       setIsLoading(true);
       fetchFeeds().then((data) => {
-        console.log("home container : ", data);
         dispatch(SET_FEED(data));
-
         setTimeout(() => {
           setIsLoading(false);
         }, 2000);
